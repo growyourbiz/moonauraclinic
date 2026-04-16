@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ตารางแพทย์</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <div id="app" class="max-w-md mx-auto bg-white min-h-screen pb-6 space-y-3 px-2"></div>
+
+  <script>
+    // 🔥 ใส่รูปตามลำดับ
+    const IMAGES = [
+      "images/001.webp",
+      "images/002.webp",
+      "images/003.webp",
+      "images/004.webp",
+      "images/005.webp",
+      "images/006.webp",
+      "images/007.webp"
+    ];
+
+    const app = document.getElementById("app");
+
+    async function loadImages() {
+      let hasImage = false;
+
+      for (const src of IMAGES) {
+        await new Promise((resolve) => {
+          const img = new Image();
+
+          img.onload = function () {
+            hasImage = true;
+
+            const el = document.createElement("img");
+            el.src = src;
+            el.className = "w-full h-auto object-cover rounded-lg shadow-md";
+            el.alt = "ตารางแพทย์";
+
+            app.appendChild(el);
+            resolve();
+          };
+
+          img.onerror = function () {
+            resolve(); // ข้ามรูปที่ไม่มี
+          };
+
+          img.src = src;
+        });
+      }
+
+      // ❗ ถ้าไม่มีรูปเลย → ไม่แสดงอะไร
+      if (!hasImage) {
+        app.style.display = "none";
+      }
+    }
+
+    loadImages();
+  </script>
+
+</body>
+</html>
